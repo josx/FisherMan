@@ -129,7 +129,7 @@ def upload_txt_file(name_file: str):
     """
     if not name_file.endswith(".txt".lower()):
         name_file += ".txt"
-    if os._path.isfile(name_file):
+    if Path(name_file).is_file():
         try:
             with open(name_file, 'r') as txt:
                 users_txt = txt.readlines()
