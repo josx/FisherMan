@@ -24,7 +24,7 @@ from src.logo import name
 from src.manager import Manager, Xpaths
 
 module_name = 'FisherMan: Extract information from facebook profiles.'
-__version__ = "3.4.0"
+__version__ = "3.4.1"
 
 
 class Fisher:
