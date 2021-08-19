@@ -10,6 +10,7 @@ from time import sleep
 from typing import Callable
 from zipfile import ZipFile, ZIP_DEFLATED
 
+from pathlib import Path
 import colorama
 import requests
 import requests.exceptions
