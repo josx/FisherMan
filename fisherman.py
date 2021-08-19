@@ -1,16 +1,15 @@
 #! /usr/bin/env python3
 
 import datetime
-import os
 from argparse import ArgumentParser
 from base64 import b64decode
 from os import walk, remove, getcwd
+from pathlib import Path
 from re import findall
 from time import sleep
 from typing import Callable
 from zipfile import ZipFile, ZIP_DEFLATED
 
-from pathlib import Path
 import colorama
 import requests
 import requests.exceptions
