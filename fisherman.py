@@ -165,13 +165,12 @@ def check_connection():
 
 
 def search(brw: Firefox, user: str):
-    wbw = WebDriverWait(brw, 10)
     parameter = user.replace(".", "%20")
     brw.get(f"{manager.get_search_prefix()}{parameter}")
     if ARGS.verbose:
         print(f'[{color_text("white", "+")}] entering the search page')
     sleep(2)
-    profiles = wbw.until(ec.presence_of_all_elements_located((By.CSS_SELECTOR, "[role='article']")))
+    profiles = scrolling_by_element(browser, (By.CSS_SELECTOR, "[role='article']"))
     if ARGS.verbose:
         print(f'[{color_text("green", "+")}] loaded profiles: {color_text("green", len(profiles))}')
     print(color_text("green", "Profiles found..."))
