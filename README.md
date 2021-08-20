@@ -18,7 +18,7 @@ $ git clone https://github.com/Godofcoffe/FisherMan
 $ cd FisherMan
 
 # install the requirements
-$ python3 -m pip install -r requirements.txt
+$ python3 -m pip install -r requeriments.txt
 
 # dependency:
  you need to install geckodriver on your machine,
