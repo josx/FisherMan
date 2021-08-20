@@ -264,6 +264,7 @@ def extra_data(brw: Firefox, user: str):
         manager.add_extras(user, {"Bio": bio, "Followers": followers, "Friends": friends})
 
 def scrolling_by_element(brw:Firefox, locator: tuple, n: int = 30):
+    wbw = WebDriverWait(brw, 10)
     """
         Scroll page by the number of elements.
 
@@ -274,7 +275,7 @@ def scrolling_by_element(brw:Firefox, locator: tuple, n: int = 30):
 
     """
     px = 0
-    elements = brw.find_elements(*locator)
+    elements = wbw.until(ec.presence_of_all_elements_located(*locator))
     while True:
         if len(elements) > n:
             break
