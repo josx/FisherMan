@@ -22,9 +22,9 @@ class Xpaths:
 
 class Manager:
     def __init__(self):
-        self.__url__ = 'https://facebook.com/'
+        self.__url__ = 'https://www.facebook.com/'
         self.__id_url_prefix__ = "https://www.facebook.com/profile.php?id="
-        self.__prefix_url_search__ = "https://www.facebook.com/search/people/?q="  # coming soon...
+        self.__prefix_url_search__ = "https://www.facebook.com/search/people/?q="
         self.__fake_email__ = 'submarino.sub.aquatico@outlook.com'
         self.__password__ = 'MDBjbGVwdG9tYW5pYWNvMDA='
         self.__data__ = {}
