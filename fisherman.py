@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 import datetime
+import sys
 from argparse import ArgumentParser
 from base64 import b64decode
 from os import walk, remove, getcwd
@@ -13,7 +14,6 @@ from zipfile import ZipFile, ZIP_DEFLATED
 import colorama
 import requests
 import requests.exceptions
-import sys
 from selenium.common import exceptions
 from selenium.webdriver import Firefox, FirefoxOptions, FirefoxProfile
 from selenium.webdriver.common.by import By
@@ -553,8 +553,8 @@ if __name__ == '__main__':
     manager = Manager()
     ARGS = fs.args
     update()
+    browser = init()
     try:
-        browser = init()
         login(browser)
         if ARGS.search:
             search(browser, ARGS.search)
