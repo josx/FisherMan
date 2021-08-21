@@ -1,10 +1,11 @@
 #! /usr/bin/env python3
 
 import datetime
-import os
+import sys
 from argparse import ArgumentParser
 from base64 import b64decode
 from os import walk, remove, getcwd
+from pathlib import Path
 from re import findall
 from time import sleep
 from typing import Callable
@@ -57,11 +58,11 @@ class Fisher:
         parser.add_argument("--specify", action="store", nargs="+", required=False, type=int,
                             choices=(0, 1, 2, 3, 4, 5),
                             help="Use the index number to return a specific part of the page. "
-                                 "about: 0,"
-                                 "about_contact_and_basic_info: 1,"
-                                 "about_family_and_relationships: 2,"
-                                 "about_details: 3,"
-                                 "about_work_and_education: 4,"
+                                 "about: 0, "
+                                 "about_contact_and_basic_info: 1, "
+                                 "about_family_and_relationships: 2, "
+                                 "about_details: 3, "
+                                 "about_work_and_education: 4, "
                                  "about_places: 5.")
 
         parser.add_argument("-s", "--several", action="store_true", required=False,
@@ -128,7 +129,7 @@ def upload_txt_file(name_file: str):
     """
     if not name_file.endswith(".txt".lower()):
         name_file += ".txt"
-    if os._path.isfile(name_file):
+    if Path(name_file).is_file():
         try:
             with open(name_file, 'r') as txt:
                 users_txt = txt.readlines()
@@ -147,7 +148,7 @@ def compact():
     with ZipFile(f"{str(datetime.datetime.now())[:16]}", "w", ZIP_DEFLATED) as zip_output:
         for _, _, files in walk(getcwd()):
             for archive in files:
-                _file_name, extension = os._path.splitext(archive)
+                _file_name, extension = archive.split(".")
                 if (extension.lower() == ".txt" and _file_name != "requeriments") or extension.lower() == ".jpeg":
                     zip_output.write(archive)
                     remove(archive)
@@ -165,13 +166,12 @@ def check_connection():
 
 
 def search(brw: Firefox, user: str):
-    wbw = WebDriverWait(brw, 10)
     parameter = user.replace(".", "%20")
     brw.get(f"{manager.get_search_prefix()}{parameter}")
     if ARGS.verbose:
         print(f'[{color_text("white", "+")}] entering the search page')
     sleep(2)
-    profiles = wbw.until(ec.presence_of_all_elements_located((By.CSS_SELECTOR, "[role='article']")))
+    profiles = scrolling_by_element(browser, (By.CSS_SELECTOR, "[role='article']"))
     if ARGS.verbose:
         print(f'[{color_text("green", "+")}] loaded profiles: {color_text("green", len(profiles))}')
     print(color_text("green", "Profiles found..."))
@@ -263,6 +263,29 @@ def extra_data(brw: Firefox, user: str):
     else:
         # in the future to add more data variables, put in the dict
         manager.add_extras(user, {"Bio": bio, "Followers": followers, "Friends": friends})
+
+
+def scrolling_by_element(brw: Firefox, locator: tuple, n: int = 30):
+    """
+        Scroll page by the number of elements.
+
+        :param brw: Instance of WebDriver.
+        :param locator: The element tuple as a "locator". Example: (By.NAME, "foo").
+        :param n: The number of elements you want it to return.
+
+        The page will scroll until the condition n is met, the default value of n is 30.
+
+    """
+    wbw = WebDriverWait(brw, 10)
+    px = 0
+    elements = wbw.until(ec.presence_of_all_elements_located(locator))
+    while True:
+        if len(elements) > n:
+            break
+        px += 250
+        brw.execute_script(f"window.scroll(0, {px});")
+        elements = brw.find_elements(*locator)
+    return elements
 
 
 def scrape(brw: Firefox, items: list[str]):
@@ -405,7 +428,24 @@ def login(brw: Firefox):
 
         :param brw: Instance of WebDriver.
     """
-    brw.get(manager.get_url())
+    try:
+        brw.get(manager.get_url())
+    except exceptions.WebDriverException as error:
+        if ARGS.verbose:
+            print(f'[{color_text("red", "-")}] An error occurred while loading the home page:')
+            print(error)
+            print(f'[{color_text("yellow", "*")}] clearing cookies and starting over.')
+        elif ARGS.quiet:
+            print(f'[{color_text("yellow", "*")}] An error occurred, restarting.')
+
+        brw.delete_all_cookies()
+        brw.get(manager.get_url())
+    finally:
+        if brw.current_url != manager.get_url():
+            print(color_text("red", "Unfortunately, I could not load the facebook homepage to login."))
+            print(color_text("yellow", "Go to the repository and create a new issue reporting the problem."))
+            sys.exit(1)
+
     wbw = WebDriverWait(brw, 10)
 
     email = wbw.until(ec.element_to_be_clickable((By.NAME, "email")))
@@ -514,16 +554,20 @@ if __name__ == '__main__':
     ARGS = fs.args
     update()
     browser = init()
-    login(browser)
-    if ARGS.search:
-        search(browser, ARGS.search)
-    elif ARGS.txt:
-        scrape(browser, upload_txt_file(ARGS.txt[0]))
-    elif ARGS.username:
-        scrape(browser, ARGS.username)
-    elif ARGS.id:
-        scrape(browser, ARGS.id)
-    browser.quit()
+    try:
+        login(browser)
+        if ARGS.search:
+            search(browser, ARGS.search)
+        elif ARGS.txt:
+            scrape(browser, upload_txt_file(ARGS.txt[0]))
+        elif ARGS.username:
+            scrape(browser, ARGS.username)
+        elif ARGS.id:
+            scrape(browser, ARGS.id)
+    except Exception as error:
+        raise error
+    finally:
+        browser.quit()
     print()
 
     if ARGS.out:  # .txt output creation

@@ -1,7 +1,7 @@
 # FisherMan
 
 [![GitHub license](https://img.shields.io/github/license/Godofcoffe/FisherMan)](https://github.com/Godofcoffe/FisherMan/blob/main/LICENSE)
-![badge](https://img.shields.io/badge/version-3.4.0-blue)
+![badge](https://img.shields.io/badge/version-3.4.1-blue)
 ![badge](https://img.shields.io/badge/python-%3E%3D3.8-orange)
 
 ### Search for public profile information on Facebook
@@ -17,8 +17,8 @@ $ git clone https://github.com/Godofcoffe/FisherMan
 # change the working directory to FisherMan
 $ cd FisherMan
 
-# install the requirements
-$ python3 -m pip install -r requirements.txt
+# install the requeriments
+$ python3 -m pip install -r requeriments.txt
 
 # dependency:
  you need to install geckodriver on your machine,
@@ -36,7 +36,7 @@ usage: fisherman.py [-h] [--version] [-u USERNAME [USERNAME ...] | -i ID
                     [--specify {0,1,2,3,4,5} [{0,1,2,3,4,5} ...]] [-s] [-b]
                     [--email EMAIL] [--password PASSWORD] [-o] [-c] [-v | -q]
 
-FisherMan: Extract information from facebook profiles. (Version 3.4.0)
+FisherMan: Extract information from facebook profiles. (Version 3.4.1)
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -54,9 +54,9 @@ optional arguments:
                         family members will be scraped if available.
   --specify {0,1,2,3,4,5} [{0,1,2,3,4,5} ...]
                         Use the index number to return a specific part of the
-                        page. about: 0,about_contact_and_basic_info:
-                        1,about_family_and_relationships: 2,about_details:
-                        3,about_work_and_education: 4,about_places: 5.
+                        page. about: 0, about_contact_and_basic_info: 1,
+                        about_family_and_relationships: 2, about_details: 3,
+                        about_work_and_education: 4, about_places: 5.
   -s, --several         Returns extra data like profile picture, number of
                         followers and friends.
   -b, --browser         Opens the browser/bot.
@@ -123,7 +123,7 @@ python3 fisherman.py --email youremail@email.com --password yourpass
   python3 fisherman.py [-S | --search] foo
   ```
   Replace the spaces in the name with "."(periods).
-  The script still returns an average of 15 profiles.
+  The script returns around 30 profiles.
   
 * For a minimalist execution:
   ```
