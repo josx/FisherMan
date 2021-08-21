@@ -13,6 +13,7 @@ from zipfile import ZipFile, ZIP_DEFLATED
 import colorama
 import requests
 import requests.exceptions
+from selenium import webdriver
 from selenium.common import exceptions
 from selenium.webdriver import Firefox, FirefoxOptions, FirefoxProfile
 from selenium.webdriver.common.by import By
@@ -427,7 +428,11 @@ def login(brw: Firefox):
 
         :param brw: Instance of WebDriver.
     """
-    brw.get(manager.get_url())
+    try:
+        brw.get(manager.get_url())
+    except exceptions.WebDriverException:
+        brw.delete_all_cookies()
+        brw.get(manager.get_url())
     wbw = WebDriverWait(brw, 10)
 
     email = wbw.until(ec.element_to_be_clickable((By.NAME, "email")))
