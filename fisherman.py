@@ -263,10 +263,12 @@ def extra_data(brw: Firefox, user: str):
         # in the future to add more data variables, put in the dict
         manager.add_extras(user, {"Bio": bio, "Followers": followers, "Friends": friends})
 
-def scrolling_by_element(brw:Firefox, locator: tuple, n: int = 30):
+
+def scrolling_by_element(brw: Firefox, locator: tuple, n: int = 30):
     """
         Scroll page by the number of elements.
 
+        :param brw: Instance of WebDriver.
         :param locator: The element tuple as a "locator". Example: (By.NAME, "foo").
         :param n: The number of elements you want it to return.
 
@@ -283,6 +285,7 @@ def scrolling_by_element(brw:Firefox, locator: tuple, n: int = 30):
         brw.execute_script(f"window.scroll(0, {px});")
         elements = brw.find_elements(*locator)
     return elements
+
 
 def scrape(brw: Firefox, items: list[str]):
     """
