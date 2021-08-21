@@ -547,7 +547,7 @@ if __name__ == '__main__':
         elif ARGS.id:
             scrape(browser, ARGS.id)
     except Exception as error:
-        raise Exception(error)
+        raise error
     finally:
         browser.quit()
     print()
