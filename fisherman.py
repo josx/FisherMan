@@ -278,7 +278,7 @@ def scrolling_by_element(brw: Firefox, locator: tuple, n: int = 30):
     """
     wbw = WebDriverWait(brw, 10)
     px = 0
-    elements = wbw.until(ec.presence_of_all_elements_located(*locator))
+    elements = wbw.until(ec.presence_of_all_elements_located(locator))
     while True:
         if len(elements) > n:
             break
@@ -430,7 +430,13 @@ def login(brw: Firefox):
     """
     try:
         brw.get(manager.get_url())
-    except exceptions.WebDriverException:
+    except exceptions.WebDriverException as error:
+        if ARGS.verbose:
+            print(f'[{color_text("red", "-")}] An error occurred while loading the home page:')
+            print(error)
+            print(f'[{color_text("yellow", "*")}] clearing cookies and starting over.')
+        elif ARGS.quiet:
+            print(f'[{color_text("yellow", "*")}] An error occurred, restarting.')
         brw.delete_all_cookies()
         brw.get(manager.get_url())
     wbw = WebDriverWait(brw, 10)
