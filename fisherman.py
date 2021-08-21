@@ -535,17 +535,21 @@ if __name__ == '__main__':
     manager = Manager()
     ARGS = fs.args
     update()
-    browser = init()
-    login(browser)
-    if ARGS.search:
-        search(browser, ARGS.search)
-    elif ARGS.txt:
-        scrape(browser, upload_txt_file(ARGS.txt[0]))
-    elif ARGS.username:
-        scrape(browser, ARGS.username)
-    elif ARGS.id:
-        scrape(browser, ARGS.id)
-    browser.quit()
+    try:
+        browser = init()
+        login(browser)
+        if ARGS.search:
+            search(browser, ARGS.search)
+        elif ARGS.txt:
+            scrape(browser, upload_txt_file(ARGS.txt[0]))
+        elif ARGS.username:
+            scrape(browser, ARGS.username)
+        elif ARGS.id:
+            scrape(browser, ARGS.id)
+    except Exception as error:
+        raise Exception(error)
+    finally:
+        browser.quit()
     print()
 
     if ARGS.out:  # .txt output creation
