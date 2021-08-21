@@ -13,7 +13,7 @@ from zipfile import ZipFile, ZIP_DEFLATED
 import colorama
 import requests
 import requests.exceptions
-from selenium import webdriver
+import sys
 from selenium.common import exceptions
 from selenium.webdriver import Firefox, FirefoxOptions, FirefoxProfile
 from selenium.webdriver.common.by import By
@@ -437,8 +437,15 @@ def login(brw: Firefox):
             print(f'[{color_text("yellow", "*")}] clearing cookies and starting over.')
         elif ARGS.quiet:
             print(f'[{color_text("yellow", "*")}] An error occurred, restarting.')
+
         brw.delete_all_cookies()
         brw.get(manager.get_url())
+    finally:
+        if brw.current_url != manager.get_url():
+            print(color_text("red", "Unfortunately, I could not load the facebook homepage to login."))
+            print(color_text("yellow", "Go to the repository and create a new issue reporting the problem."))
+            sys.exit(1)
+
     wbw = WebDriverWait(brw, 10)
 
     email = wbw.until(ec.element_to_be_clickable((By.NAME, "email")))
