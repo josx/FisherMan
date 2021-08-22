@@ -525,8 +525,6 @@ def init():
                          f'The executable "geckodriver" was not found or the browser "Firefox" is not installed.'))
         print(color_text("yellow", f"error details:\n{error}"))
     else:
-        # others arguments
-        engine.delete_all_cookies()
         return engine
 
 
