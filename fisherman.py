@@ -596,6 +596,7 @@ if __name__ == '__main__':
                 print()
 
             if ARGS.several:
+                print("=" * 60)
                 print("EXTRAS:")
                 for data_extra in manager.get_extras()[profile].items():
                     print(f"{data_extra[0]:10}: {data_extra[1]}")
