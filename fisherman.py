@@ -242,13 +242,18 @@ def extra_data(brw: Firefox, user: str):
     else:
         bio = None
 
-    followers = str(collection_by_xpath(ec.visibility_of_element_located, xpaths.followers).text).split()[0]
+    if collection_by_xpath(ec.visibility_of_element_located, xpaths.followers) is not None:
+        followers = str(collection_by_xpath(ec.visibility_of_element_located, xpaths.followers).text).split()[0]
+    else:
+        followers = None
 
     try:
         element = collection_by_xpath(ec.visibility_of_element_located, xpaths.friends)
         element = element.find_elements_by_tag_name("span")[2].text
     except IndexError:
         print(f'[{color_text("red", "-")}] There is no number of friends to catch')
+    except:
+        friends = None
     else:
         friends = element
 
