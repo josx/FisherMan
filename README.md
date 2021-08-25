@@ -36,7 +36,7 @@ usage: fisherman.py [-h] [--version] [-u USERNAME [USERNAME ...] | -i ID
                     [--specify {0,1,2,3,4,5} [{0,1,2,3,4,5} ...]] [-s] [-b]
                     [--email EMAIL] [--password PASSWORD] [-o] [-c] [-v | -q]
 
-FisherMan: Extract information from facebook profiles. (Version 3.4.2)
+FisherMan: Extract information from facebook profiles. (Version 3.4.3)
 
 optional arguments:
   -h, --help            show this help message and exit
