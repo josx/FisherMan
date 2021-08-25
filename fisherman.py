@@ -145,7 +145,7 @@ def compact():
     """
         Compress all .txt with the exception of requirements.txt.
     """
-    with ZipFile(f"{str(datetime.datetime.now())[:16]}", "w", ZIP_DEFLATED) as zip_output:
+    with ZipFile(f"{str(datetime.datetime.now())[:16]}.zip", "w", ZIP_DEFLATED) as zip_output:
         for _, _, files in walk(getcwd()):
             for archive in files:
                 extension = Path(archive).suffix
