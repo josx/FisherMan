@@ -591,9 +591,9 @@ if __name__ == '__main__':
                 print('-' * 60)
                 print(data)
             if count_profiles > 1:
-                print()
-                print("=" * 60)
-                print()
+                print("\n\n")
+                print("-" * 30, "{:^}".format("/" * 20), "-" * 28)
+                print("\n\n")
 
             if ARGS.several:
                 print("=" * 60)
