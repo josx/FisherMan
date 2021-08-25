@@ -293,6 +293,25 @@ def scrolling_by_element(brw: Firefox, locator: tuple, n: int = 30):
     return elements
 
 
+def thin_out(user: str):
+    """
+        Username Refiner.
+
+        :param user: user to be refined.
+
+        This function returns a username that is acceptable for the script to run correctly.
+    """
+
+    if "id=" in user or user.isnumeric():
+        if "facebook.com" in user:
+            user = user[user.index("=") + 1:]
+        return manager.get_id_prefix(), user
+    else:
+        if "facebook.com" in user:
+            user = user[user.index("/", 9) + 1:]
+        return manager.get_url(), user
+
+
 def scrape(brw: Firefox, items: list[str]):
     """
         Extract certain information from the html of an item in the list provided.
@@ -307,24 +326,6 @@ def scrape(brw: Firefox, items: list[str]):
               '/about_work_and_education', '/about_places']
     branch_id = [bn.replace("/", "&sk=") for bn in branch]
     wbw = WebDriverWait(brw, 10)
-
-    def thin_out(user: str):
-        """
-            Username Refiner.
-
-            :param user: user to be refined.
-
-            This function returns a username that is acceptable for the script to run correctly.
-        """
-
-        if "id=" in user or user.isnumeric():
-            if "facebook.com" in user:
-                user = user[user.index("=") + 1:]
-            return manager.get_id_prefix(), user
-        else:
-            if "facebook.com" in user:
-                user = user[user.index("/", 9) + 1:]
-            return manager.get_url(), user
 
     for usrs in items:
         prefix, usrs = thin_out(usrs)
@@ -535,6 +536,7 @@ def out_file(_input: list[str]):
         :param _input: The list that will be iterated over each line of the file, in this case it is the list of users.
     """
     for usr in _input:
+        usr = thin_out(usr)[1]
         file_name = rf"{usr}-{str(datetime.datetime.now())[:16]}.txt"
         if ARGS.compact:
             file_name = usr + ".txt"
@@ -577,7 +579,7 @@ if __name__ == '__main__':
         if ARGS.username:
             out_file(ARGS.username)
         elif ARGS.txt:
-            out_file(ARGS.txt)
+            out_file(upload_txt_file(ARGS.txt[0]))
         elif ARGS.id:
             out_file(ARGS.id)
     else:
