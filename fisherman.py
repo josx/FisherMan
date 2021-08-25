@@ -317,7 +317,7 @@ def scrape(brw: Firefox, items: list[str]):
             This function returns a username that is acceptable for the script to run correctly.
         """
 
-        if user.isnumeric():
+        if "id=" in user or user.isnumeric():
             if "facebook.com" in user:
                 user = user[user.index("=") + 1:]
             return manager.get_id_prefix(), user
@@ -398,7 +398,7 @@ def scrape(brw: Firefox, items: list[str]):
                     extra_data(brw, memb)
 
                 rest = 0
-                for bn in branch if not memb.isnumeric() else branch_id:
+                for bn in branch if not thin_out(memb)[1].isnumeric() else branch_id:
                     brw.get(f'{memb + bn}')
                     try:
                         output2 = wbw.until(ec.presence_of_element_located((By.CLASS_NAME,
