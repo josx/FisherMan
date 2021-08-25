@@ -132,7 +132,7 @@ def upload_txt_file(name_file: str):
     if Path(name_file).is_file():
         try:
             with open(name_file, 'r') as txt:
-                users_txt = txt.readlines()
+                users_txt = [line.replace("\n", "") for line in txt.readlines()]
         except Exception as error:
             print(color_text('red', f'An error has occurred: {error}'))
         else:
