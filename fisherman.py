@@ -148,7 +148,8 @@ def compact():
     with ZipFile(f"{str(datetime.datetime.now())[:16]}", "w", ZIP_DEFLATED) as zip_output:
         for _, _, files in walk(getcwd()):
             for archive in files:
-                _file_name, extension = archive.split(".")
+                extension = Path(archive).suffix
+                _file_name = archive.replace(extension, "")
                 if (extension.lower() == ".txt" and _file_name != "requeriments") or extension.lower() == ".jpeg":
                     zip_output.write(archive)
                     remove(archive)
