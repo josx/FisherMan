@@ -33,6 +33,11 @@ class Fisher:
         parser = ArgumentParser(description=f'{module_name} (Version {__version__})')
         exclusive_group = parser.add_mutually_exclusive_group()
         exclusive_group2 = parser.add_mutually_exclusive_group()
+        command_search = parser.add_subparsers(title="Argument search", help="Command to search profiles.")
+        arg_search = command_search.add_parser("search")
+        arg_search.add_argument("-S", "--search", action="store", required=False, metavar="USER",
+                                help="It does a shallow search for the username. "
+                                     "Replace the spaces with '.'(period).")
 
         parser.add_argument('--version', action='version', version=f'%(prog)s {__version__}',
                             help='Shows the current version of the program.')
@@ -46,10 +51,6 @@ class Fisher:
         exclusive_group.add_argument('--use-txt', action='store', required=False, dest='txt', metavar='TXT_FILE',
                                      type=str, nargs=1,
                                      help='Replaces the USERNAME parameter with a user list in a txt.')
-
-        exclusive_group.add_argument("-S", "--search", action="store", required=False, metavar="USER",
-                                     help="It does a shallow search for the username. "
-                                          "Replace the spaces with '.'(period).")
 
         parser.add_argument('-sf', '--scrape-family', action='store_true', required=False, dest='scrpfm',
                             help='If this parameter is passed, '
