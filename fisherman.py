@@ -2,6 +2,7 @@
 
 import datetime
 import sys
+import json
 from argparse import ArgumentParser
 from base64 import b64decode
 from os import walk, remove, getcwd
@@ -173,7 +174,18 @@ def check_connection():
 
 def search(brw: Firefox, user: str):
     parameter = user.replace(".", "%20")
-    brw.get(f"{manager.get_search_prefix()}{parameter}")
+
+    with open("filters.json", "r") as jsonfile:
+        filters = json.loads(jsonfile.read())
+    if ARGS.work or ARGS.education or ARGS.city:
+        suffix = "&filters="
+        great_filter = ""
+        great_filter += filters["Work"].get(ARGS.work)
+        great_filter += filters["Education"].get(ARGS.education)
+        great_filter += filters["City"].get(ARGS.city)
+        brw.get(f"{manager.get_search_prefix()}{parameter}{suffix+great_filter}")
+    else:
+        brw.get(f"{manager.get_search_prefix()}{parameter}")
     if ARGS.verbose:
         print(f'[{color_text("white", "+")}] entering the search page')
     sleep(2)
