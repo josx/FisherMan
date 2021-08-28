@@ -35,9 +35,8 @@ class Fisher:
         exclusive_group2 = parser.add_mutually_exclusive_group()
         command_search = parser.add_subparsers(title="Argument search", help="Command to search profiles.")
         arg_search = command_search.add_parser("search")
-        arg_search.add_argument("-S", "--search", action="store", required=False, metavar="USER",
-                                help="It does a shallow search for the username. "
-                                     "Replace the spaces with '.'(period).")
+        arg_search.add_argument("user", help="It does a shallow search for the username. "
+                                             "Replace the spaces with '.'(period).")
 
         parser.add_argument('--version', action='version', version=f'%(prog)s {__version__}',
                             help='Shows the current version of the program.')
