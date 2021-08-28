@@ -36,8 +36,8 @@ class Fisher:
 
         command_search = parser.add_subparsers(title="Argument search", help="Command to search profiles.")
         arg_search = command_search.add_parser("search")
-        
-        arg_search.add_argument("user", help="It does a shallow search for the username. "
+
+        arg_search.add_argument("name", help="It does a shallow search for the username. "
                                              "Replace the spaces with '.'(period).")
         arg_search.add_argument("-work", required=False, action="append", help="Sets the work filter.")
         arg_search.add_argument("-education", required=False, action="append", help="Sets the education filter.")
@@ -567,8 +567,8 @@ if __name__ == '__main__':
     browser = init()
     try:
         login(browser)
-        if ARGS.search:
-            search(browser, ARGS.search)
+        if ARGS.name:
+            search(browser, ARGS.name)
         elif ARGS.txt:
             scrape(browser, upload_txt_file(ARGS.txt[0]))
         elif ARGS.username:
