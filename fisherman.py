@@ -33,10 +33,15 @@ class Fisher:
         parser = ArgumentParser(description=f'{module_name} (Version {__version__})')
         exclusive_group = parser.add_mutually_exclusive_group()
         exclusive_group2 = parser.add_mutually_exclusive_group()
+
         command_search = parser.add_subparsers(title="Argument search", help="Command to search profiles.")
         arg_search = command_search.add_parser("search")
+        
         arg_search.add_argument("user", help="It does a shallow search for the username. "
                                              "Replace the spaces with '.'(period).")
+        arg_search.add_argument("-work", required=False, action="append", help="Sets the work filter.")
+        arg_search.add_argument("-education", required=False, action="append", help="Sets the education filter.")
+        arg_search.add_argument("-city", required=False, action="append", help="Sets the city filter.")
 
         parser.add_argument('--version', action='version', version=f'%(prog)s {__version__}',
                             help='Shows the current version of the program.')
