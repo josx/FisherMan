@@ -35,7 +35,7 @@ class Fisher:
         exclusive_group = parser.add_mutually_exclusive_group()
         exclusive_group2 = parser.add_mutually_exclusive_group()
 
-        command_search = parser.add_subparsers(title="Argument search", help="Command to search profiles.")
+        command_search = parser.add_subparsers(title="SubCommands", help="Command to search profiles.")
         arg_search = command_search.add_parser("search")
 
         arg_search.add_argument("name", help="It does a shallow search for the username. "
