@@ -596,7 +596,7 @@ if __name__ == '__main__':
     try:
         login(browser)
         if ARGS.search:
-            search(browser, ARGS.name)
+            search(browser, ARGS.search)
         elif ARGS.txt:
             scrape(browser, upload_txt_file(ARGS.txt[0]))
         elif ARGS.username:
