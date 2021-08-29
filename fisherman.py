@@ -35,17 +35,6 @@ class Fisher:
         exclusive_group = parser.add_mutually_exclusive_group()
         exclusive_group2 = parser.add_mutually_exclusive_group()
 
-        command_search = parser.add_subparsers(title="SubCommands", help="Command to search profiles.")
-        arg_search = command_search.add_parser("search")
-
-        arg_search.add_argument("name", help="It does a shallow search for the username. "
-                                             "Replace the spaces with '.'(period).")
-        arg_search.add_argument("-work", required=False, action="append", help="Sets the work filter.")
-        arg_search.add_argument("-education", required=False, action="append", help="Sets the education filter.")
-        arg_search.add_argument("-city", required=False, action="append", help="Sets the city filter.")
-        arg_search.add_argument("-filters", required=False, action="store_true",
-                                help="Shows the list of available filters.")
-
         parser.add_argument('--version', action='version', version=f'%(prog)s {__version__}',
                             help='Shows the current version of the program.')
 
@@ -58,6 +47,10 @@ class Fisher:
         exclusive_group.add_argument('--use-txt', action='store', required=False, dest='txt', metavar='TXT_FILE',
                                      type=str, nargs=1,
                                      help='Replaces the USERNAME parameter with a user list in a txt.')
+
+        exclusive_group.add_argument("-S", "--search", action="store", required=False, metavar="USER",
+                                     help="It does a shallow search for the username. "
+                                          "Replace the spaces with '.'(period).")
 
         parser.add_argument('-sf', '--scrape-family', action='store_true', required=False, dest='scrpfm',
                             help='If this parameter is passed, '
@@ -75,6 +68,11 @@ class Fisher:
 
         parser.add_argument("-s", "--several", action="store_true", required=False,
                             help="Returns extra data like profile picture, number of followers and friends.")
+
+
+        parser.add_argument("-work", required=False, action="append", help="Sets the work filter.")
+        parser.add_argument("-education", required=False, action="append", help="Sets the education filter.")
+        parser.add_argument("-city", required=False, action="append", help="Sets the city filter.")
 
         parser.add_argument('-b', '--browser', action='store_true', required=False,
                             help='Opens the browser/bot.')
@@ -185,7 +183,7 @@ def search(brw: Firefox, user: str):
         great_filter += filters["Work"].get(ARGS.work)
         great_filter += filters["Education"].get(ARGS.education)
         great_filter += filters["City"].get(ARGS.city)
-        brw.get(f"{manager.get_search_prefix()}{parameter}{suffix+great_filter}")
+        brw.get(f"{manager.get_search_prefix()}{parameter}{suffix + great_filter}")
     else:
         brw.get(f"{manager.get_search_prefix()}{parameter}")
     if ARGS.verbose:
@@ -581,7 +579,7 @@ if __name__ == '__main__':
     browser = init()
     try:
         login(browser)
-        if ARGS.name:
+        if ARGS.search:
             search(browser, ARGS.name)
         elif ARGS.txt:
             scrape(browser, upload_txt_file(ARGS.txt[0]))
@@ -593,8 +591,6 @@ if __name__ == '__main__':
         raise error
     finally:
         browser.quit()
-    print()
-
     if ARGS.out:  # .txt output creation
         if ARGS.username:
             out_file(ARGS.username)
