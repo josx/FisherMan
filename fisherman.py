@@ -43,6 +43,8 @@ class Fisher:
         arg_search.add_argument("-work", required=False, action="append", help="Sets the work filter.")
         arg_search.add_argument("-education", required=False, action="append", help="Sets the education filter.")
         arg_search.add_argument("-city", required=False, action="append", help="Sets the city filter.")
+        arg_search.add_argument("-filters", required=False, action="store_true",
+                                help="Shows the list of available filters.")
 
         parser.add_argument('--version', action='version', version=f'%(prog)s {__version__}',
                             help='Shows the current version of the program.')
