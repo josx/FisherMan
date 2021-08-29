@@ -186,13 +186,16 @@ def search(brw: Firefox, user: str):
     parameter = user.replace(".", "%20")
 
     with open("filters.json", "r") as jsonfile:
-        filters = json.loads(jsonfile.read())
+        filters = json.load(jsonfile)
     if ARGS.work or ARGS.education or ARGS.city:
         suffix = "&filters="
         great_filter = ""
-        great_filter += filters["Work"].get(ARGS.work)
-        great_filter += filters["Education"].get(ARGS.education)
-        great_filter += filters["City"].get(ARGS.city)
+        if ARGS.work is not None:
+            great_filter += filters["Work"][ARGS.work]
+        if ARGS.education is not None:
+            great_filter += filters["Education"][ARGS.education]
+        if ARGS.city is not None:
+            great_filter += filters["City"][ARGS.city]
         brw.get(f"{manager.get_search_prefix()}{parameter}{suffix + great_filter}")
     else:
         brw.get(f"{manager.get_search_prefix()}{parameter}")
