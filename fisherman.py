@@ -129,10 +129,10 @@ def update():
 
 def show_filters():
     with open("filters.json", "r") as json_file:
-        for index in json.loads(json_file.read()).keys():
-            print(f"{index}:")
-            for value in json.loads(json_file.read())[index]:
-                print(f"\t{value}")
+        for tag in json.load(json_file).items():
+            print(f"{tag[0]}:")
+            for t in tag[1]:
+                print("\t", t)
 
 
 def upload_txt_file(name_file: str):
