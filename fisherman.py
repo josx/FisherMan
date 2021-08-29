@@ -72,9 +72,9 @@ class Fisher:
         parser.add_argument("--filters", required=False, action="store_true",
                             help="Shows the list of available filters.")
 
-        parser.add_argument("-work", required=False, action="append", help="Sets the work filter.")
-        parser.add_argument("-education", required=False, action="append", help="Sets the education filter.")
-        parser.add_argument("-city", required=False, action="append", help="Sets the city filter.")
+        parser.add_argument("-work", required=False, help="Sets the work filter.")
+        parser.add_argument("-education", required=False, help="Sets the education filter.")
+        parser.add_argument("-city", required=False, help="Sets the city filter.")
 
         parser.add_argument('-b', '--browser', action='store_true', required=False,
                             help='Opens the browser/bot.')
