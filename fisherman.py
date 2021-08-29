@@ -69,6 +69,8 @@ class Fisher:
         parser.add_argument("-s", "--several", action="store_true", required=False,
                             help="Returns extra data like profile picture, number of followers and friends.")
 
+        parser.add_argument("--filters", required=False, action="store_true",
+                            help="Shows the list of available filters.")
 
         parser.add_argument("-work", required=False, action="append", help="Sets the work filter.")
         parser.add_argument("-education", required=False, action="append", help="Sets the education filter.")
@@ -123,6 +125,14 @@ def update():
                 print(color_text("yellow", "Update Available!"))
     except Exception as error:
         print(color_text('red', f"A problem occured while checking for an update: {error}"))
+
+
+def show_filters():
+    with open("filters.json", "r") as json_file:
+        for index in json.loads(json_file.read()).keys():
+            print(f"{index}:")
+            for value in json.loads(json_file.read())[index]:
+                print(f"\t{value}")
 
 
 def upload_txt_file(name_file: str):
@@ -576,6 +586,9 @@ if __name__ == '__main__':
     manager = Manager()
     ARGS = fs.args
     update()
+    if ARGS.filters:
+        show_filters()
+        sys.exit(0)
     browser = init()
     try:
         login(browser)
