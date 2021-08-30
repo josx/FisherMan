@@ -39,30 +39,26 @@ class Fisher:
         opt_profile = parser.add_argument_group("profile options")
         opt_login = parser.add_argument_group("credentials")
         opt_out = parser.add_argument_group("output")
+        exclusive_filter = opt_search.add_mutually_exclusive_group()
 
         parser.add_argument('--version', action='version', version=f'%(prog)s {__version__}',
                             help='Shows the current version of the program.')
 
-        exclusive_group.add_argument('-u', '--username', action='store', nargs='+', required=False,
-                                     type=str, help='Defines one or more users for the search.')
+        exclusive_group.add_argument('-u', '--username', nargs='+', help='Defines one or more users for the search.')
 
-        exclusive_group.add_argument("-i", "--id", action="store", nargs="+", required=False, type=str,
-                                     help="Set the profile identification number.")
+        exclusive_group.add_argument("-i", "--id", nargs="+", help="Set the profile identification number.")
 
-        exclusive_group.add_argument('--use-txt', action='store', required=False, dest='txt', metavar='TXT_FILE',
-                                     type=str, nargs=1,
+        exclusive_group.add_argument('--use-txt', dest='txt', metavar='TXT_FILE', nargs=1,
                                      help='Replaces the USERNAME parameter with a user list in a txt.')
 
-        exclusive_group.add_argument("-S", "--search", action="store", required=False, metavar="USER",
-                                     help="It does a shallow search for the username. "
-                                          "Replace the spaces with '.'(period).")
+        exclusive_group.add_argument("-S", "--search", metavar="USER", help="It does a shallow search for the username."
+                                                                            " Replace the spaces with '.'(period).")
 
-        opt_profile.add_argument('-sf', '--scrape-family', action='store_true', required=False, dest='scrpfm',
+        opt_profile.add_argument('-sf', '--scrape-family', action='store_true', dest='scrpfm',
                                  help='If this parameter is passed, '
                                       'the information from family members will be scraped if available.')
 
-        opt_profile.add_argument("--specify", action="store", nargs="+", required=False, type=int,
-                                 choices=(0, 1, 2, 3, 4, 5),
+        opt_profile.add_argument("--specify", nargs="+", type=int, choices=(0, 1, 2, 3, 4, 5),
                                  help="Use the index number to return a specific part of the page. "
                                       "about: 0, "
                                       "about_contact_and_basic_info: 1, "
@@ -71,39 +67,36 @@ class Fisher:
                                       "about_work_and_education: 4, "
                                       "about_places: 5.")
 
-        opt_profile.add_argument("-s", "--several", action="store_true", required=False,
+        opt_profile.add_argument("-s", "--several", action="store_true",
                                  help="Returns extra data like profile picture, number of followers and friends.")
 
-        opt_search.add_argument("--filters", required=False, action="store_true",
+        opt_search.add_argument("--filters", action="store_true",
                                 help="Shows the list of available filters.")
 
-        opt_search.add_argument("-work", required=False, help="Sets the work filter.")
-        opt_search.add_argument("-education", required=False, help="Sets the education filter.")
-        opt_search.add_argument("-city", required=False, help="Sets the city filter.")
+        exclusive_filter.add_argument("-work", help="Sets the work filter.")
+        exclusive_filter.add_argument("-education", help="Sets the education filter.")
+        exclusive_filter.add_argument("-city", help="Sets the city filter.")
 
-        parser.add_argument('-b', '--browser', action='store_true', required=False,
-                            help='Opens the browser/bot.')
+        parser.add_argument('-b', '--browser', action='store_true', help='Opens the browser/bot.')
 
-        opt_login.add_argument('--email', action='store', metavar='EMAIL',
-                               required=False, type=str, nargs=1,
+        opt_login.add_argument('--email', metavar='EMAIL', nargs=1,
                                help='If the profile is blocked, you can define your account, '
                                     'however you have the search user in your friends list.')
 
-        opt_login.add_argument('--password', action='store', metavar='PASSWORD', dest='pwd', required=False, type=str,
-                               nargs=1,
+        opt_login.add_argument('--password', metavar='PASSWORD', dest='pwd', nargs=1,
                                help='Set the password for your facebook account, '
                                     'this parameter has to be used with --email.')
 
-        opt_out.add_argument('-o', '--file-output', action='store_true', required=False, dest='out',
+        opt_out.add_argument('-o', '--file-output', action='store_true', dest='out',
                              help='Save the output data to a .txt file.')
 
-        opt_out.add_argument("-c", "--compact", action="store_true", required=False,
+        opt_out.add_argument("-c", "--compact", action="store_true",
                              help="Compress all .txt files. Use together with -o.")
 
-        exclusive_group2.add_argument('-v', '-d', '--verbose', '--debug', action='store_true', required=False,
+        exclusive_group2.add_argument('-v', '-d', '--verbose', '--debug', action='store_true',
                                       help='It shows in detail the data search process.')
 
-        exclusive_group2.add_argument("-q", "--quiet", action="store_true", required=False,
+        exclusive_group2.add_argument("-q", "--quiet", action="store_true",
                                       help="Eliminates and simplifies some script outputs for "
                                            "a simpler and more discrete visualization.")
 
