@@ -138,12 +138,26 @@ python3 fisherman.py --email youremail@email.com --password yourpass
   ```
   Replace the spaces in the name with "."(periods).
   The script returns around 30 profiles.
+
+* To filter the search:
+  ```
+  python3 fisherman.py -S name -work fisherman
+  ```
+  If the filter has spaces, enclose it in quotes.
   
 * For a minimalist execution:
   ```
   python3 fisherman.py [-q | --quiet]
   ```
   Considerably reduces the script's output texts and, by convention, improves performance.
+
+## Contributing
+I would love to have your help in developing this project.
+
+Some things you can help me with:
+  * Add more search filters.
+
+Please look at the Wiki entry on [Adding filters to the search argument](https://github.com/Godofcoffe/FisherMan/wiki/Adding-filters-to-the-search-argument) to understand the issues.
 
 ## *This tool only extracts information that is public, not use for private or illegal purposes.*
 
