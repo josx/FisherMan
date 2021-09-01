@@ -27,11 +27,9 @@ $ python3 -m pip install -r requeriments.txt
  extract and copy the binary, i recommend placing it in /usr/bin
 ```
 
-## If you are using windows: [source](https://github.com/Godofcoffe/FisherMan/tree/compatible-with-windows)
-
 ## Usage
 
-```
+```console
 $ python3 fisherman.py --help
 usage: fisherman.py [-h] [--version] [-u USERNAME [USERNAME ...] | -i ID
                     [ID ...] | --use-txt TXT_FILE | -S USER] [-sf]
@@ -152,6 +150,8 @@ python3 fisherman.py --email youremail@email.com --password yourpass
   python3 fisherman.py [-q | --quiet]
   ```
   Considerably reduces the script's output texts and, by convention, improves performance.
+
+## If you are using windows: [source](https://github.com/Godofcoffe/FisherMan/tree/compatible-with-windows)
 
 ## Contributing
 I would love to have your help in developing this project.
