@@ -27,6 +27,8 @@ $ python3 -m pip install -r requeriments.txt
  extract and copy the binary, i recommend placing it in /usr/bin
 ```
 
+## If you are using windows: [source](https://github.com/Godofcoffe/FisherMan/tree/compatible-with-windows)
+
 ## Usage
 
 ```
