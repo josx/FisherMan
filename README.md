@@ -6,11 +6,11 @@
 
 ### Search for public profile information on Facebook
 
-![screenshot](template.png)
+[![asciicast](https://asciinema.org/a/434026.svg)](https://asciinema.org/a/434026)
 
 ## Installation
 
-```
+```console
 # clone the repo
 $ git clone https://github.com/Godofcoffe/FisherMan
 
