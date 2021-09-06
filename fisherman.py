@@ -40,6 +40,7 @@ class Fisher:
         opt_login = parser.add_argument_group("credentials")
         opt_out = parser.add_argument_group("output")
         exclusive_filter = opt_search.add_mutually_exclusive_group()
+        exclusive_out = opt_out.add_mutually_exclusive_group()
 
         parser.add_argument('--version', action='version', version=f'%(prog)s {__version__}',
                             help='Shows the current version of the program.')
@@ -87,18 +88,11 @@ class Fisher:
                                help='Set the password for your facebook account, '
                                     'this parameter has to be used with --email.')
 
-        opt_out.add_argument('-o', '--file-output', action='store_true', dest='out',
-                             help='Save the output data to a .txt file.')
+        exclusive_out.add_argument('-o', '--file-output', action='store_true', dest='out',
+                                   help='Save the output data to a .txt file.')
 
-        opt_out.add_argument("-c", "--compact", action="store_true",
-                             help="Compress all .txt files. Use together with -o.")
-
-        exclusive_group2.add_argument('-v', '-d', '--verbose', '--debug', action='store_true',
-                                      help='It shows in detail the data search process.')
-
-        exclusive_group2.add_argument("-q", "--quiet", action="store_true",
-                                      help="Eliminates and simplifies some script outputs for "
-                                           "a simpler and more discrete visualization.")
+        exclusive_out.add_argument("-c", "--compact", action="store_true",
+                                   help="Save the output data to a .txt file and compress.")
 
         self.args = parser.parse_args()
         if not self.args.quiet:
