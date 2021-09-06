@@ -55,6 +55,13 @@ class Fisher:
         exclusive_group.add_argument("-S", "--search", metavar="USER", help="It does a shallow search for the username."
                                                                             " Replace the spaces with '.'(period).")
 
+        exclusive_group2.add_argument('-v', '-d', '--verbose', '--debug', action='store_true',
+                                      help='It shows in detail the data search process.')
+
+        exclusive_group2.add_argument("-q", "--quiet", action="store_true",
+                                      help="Eliminates and simplifies some script outputs for "
+                                           "a simpler and more discrete visualization.")
+
         opt_profile.add_argument('-sf', '--scrape-family', action='store_true', dest='scrpfm',
                                  help='If this parameter is passed, '
                                       'the information from family members will be scraped if available.')
