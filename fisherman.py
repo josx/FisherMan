@@ -9,7 +9,7 @@ from os import walk, remove, getcwd
 from pathlib import Path
 from re import findall
 from time import sleep
-from typing import Callable
+from typing import Callable, List, AnyStr, Tuple
 from zipfile import ZipFile, ZIP_DEFLATED
 
 import colorama
@@ -133,7 +133,7 @@ def show_filters():
                 print("\t", t)
 
 
-def upload_txt_file(name_file: str):
+def upload_txt_file(name_file: AnyStr):
     """
         Load a file to replace the username parameter.
 
@@ -180,7 +180,7 @@ def check_connection():
         raise Exception("There is no internet connection.")
 
 
-def search(brw: Firefox, user: str):
+def search(brw: Firefox, user: AnyStr):
     parameter = user.replace(".", "%20")
 
     with open("filters.json", "r") as jsonfile:
@@ -230,7 +230,7 @@ def search(brw: Firefox, user: str):
         print()
 
 
-def extra_data(brw: Firefox, user: str):
+def extra_data(brw: Firefox, user: AnyStr):
     """
         Save other data outside the about user page.
 
@@ -247,7 +247,7 @@ def extra_data(brw: Firefox, user: str):
     wbw = WebDriverWait(brw, 10)
     xpaths = Xpaths()
 
-    def collection_by_xpath(expected: Callable, xpath: str):
+    def collection_by_xpath(expected: Callable, xpath: AnyStr):
         try:
             wbw.until(expected((By.XPATH, xpath)))
         except exceptions.NoSuchElementException:
@@ -299,7 +299,7 @@ def extra_data(brw: Firefox, user: str):
         manager.add_extras(user, {"Bio": bio, "Followers": followers, "Friends": friends})
 
 
-def scrolling_by_element(brw: Firefox, locator: tuple, n: int = 30):
+def scrolling_by_element(brw: Firefox, locator: Tuple, n=30):
     """
         Scroll page by the number of elements.
 
@@ -322,7 +322,7 @@ def scrolling_by_element(brw: Firefox, locator: tuple, n: int = 30):
     return elements
 
 
-def thin_out(user: str):
+def thin_out(user: AnyStr):
     """
         Username Refiner.
 
@@ -341,7 +341,7 @@ def thin_out(user: str):
         return manager.get_url(), user
 
 
-def scrape(brw: Firefox, items: list[str]):
+def scrape(brw: Firefox, items: List[AnyStr]):
     """
         Extract certain information from the html of an item in the list provided.
 
@@ -558,7 +558,7 @@ def init():
         return engine
 
 
-def out_file(_input: list[str]):
+def out_file(_input: List[AnyStr]):
     """
         Create the .txt output of the -o parameter.
 
