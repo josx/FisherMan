@@ -610,13 +610,22 @@ if __name__ == '__main__':
         raise error
     finally:
         browser.quit()
-    if ARGS.out:  # .txt output creation
+    if ARGS.out:
         if ARGS.username:
             out_file(ARGS.username)
         elif ARGS.txt:
             out_file(upload_txt_file(ARGS.txt[0]))
         elif ARGS.id:
             out_file(ARGS.id)
+
+    elif ARGS.compact:
+        if ARGS.username:
+            compact(ARGS.username)
+        elif ARGS.txt:
+            compact(upload_txt_file(ARGS.txt[0]))
+        elif ARGS.id:
+            compact(ARGS.id)
+
     else:
         if ARGS.id or ARGS.username or ARGS.txt:
             print(color_text('green', 'Information found:'))
