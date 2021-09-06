@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-import datetime
+from datetime import datetime
 import sys
 import json
 from argparse import ArgumentParser
