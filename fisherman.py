@@ -156,11 +156,14 @@ def upload_txt_file(name_file: AnyStr):
         raise Exception(color_text("red", "INVALID FILE!"))
 
 
-def compact():
+def compact(_list: List[AnyStr]):
     """
         Compress all .txt with the exception of requirements.txt.
     """
-    with ZipFile(f"{str(datetime.datetime.now())[:16]}.zip", "w", ZIP_DEFLATED) as zip_output:
+    out_file(_list)
+    if ARGS.verbose:
+        print(f'[{color_text("white", "*")}] preparing compaction...')
+    with ZipFile(f"{str(datetime.now())[:16]}.zip", "w", ZIP_DEFLATED) as zip_output:
         for _, _, files in walk(getcwd()):
             for archive in files:
                 extension = Path(archive).suffix
@@ -567,7 +570,7 @@ def out_file(_input: List[AnyStr]):
     """
     for usr in _input:
         usr = thin_out(usr)[1]
-        file_name = rf"{usr}-{str(datetime.datetime.now())[:16]}.txt"
+        file_name = rf"{usr}-{str(datetime.now())[:16]}.txt"
         if ARGS.compact:
             file_name = usr + ".txt"
         with open(file_name, 'w+') as file:
@@ -575,10 +578,6 @@ def out_file(_input: List[AnyStr]):
                 file.writelines(data_list)
 
     print(f'[{color_text("green", "+")}] .txt file(s) created')
-    if ARGS.compact:
-        if ARGS.verbose:
-            print(f'[{color_text("white", "*")}] preparing compaction...')
-        compact()
 
 
 if __name__ == '__main__':
