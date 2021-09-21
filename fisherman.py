@@ -111,6 +111,9 @@ class Fisher:
 
 
 def update():
+    """
+        Checks for changes on the remote server.
+    """
     try:
         r = requests.get("https://raw.githubusercontent.com/Godofcoffe/FisherMan/main/fisherman.py")
 
@@ -145,6 +148,9 @@ def update_filters():
 
 
 def show_filters():
+    """
+        Shows the available filters.
+    """
     with open("filters.json", "r") as json_file:
         for tag in json.load(json_file).items():
             print(f"{tag[0]}:")
@@ -203,6 +209,12 @@ def check_connection():
 
 
 def search(brw: Firefox, user: AnyStr):
+    """
+        It searches by the person's name.
+
+        :param brw: Instance of WebDriver.
+        :param user: name to search.
+    """
     parameter = user.replace(".", "%20")
 
     with open("filters.json", "r") as jsonfile:
