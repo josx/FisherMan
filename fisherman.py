@@ -507,7 +507,6 @@ def login(brw: Firefox):
         elif ARGS.quiet:
             print(f'[{color_text("yellow", "*")}] An error occurred, restarting.')
 
-        brw.delete_all_cookies()
         brw.get(manager.get_url())
     finally:
         if brw.current_url != manager.get_url():
