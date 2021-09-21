@@ -626,7 +626,7 @@ if __name__ == '__main__':
     if not ARGS.id and not ARGS.username and not ARGS.txt and not ARGS.search:
         print(f"No input argument was used.")
         print(f"Use an optional argument to run the script.")
-        print(f"See [-h, --help].")
+        print(f"Use --help.")
         sys.exit(1)
     browser = init()
     try:
