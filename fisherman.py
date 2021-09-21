@@ -192,7 +192,7 @@ def compact(_list: List[AnyStr]):
             for archive in files:
                 extension = Path(archive).suffix
                 _file_name = archive.replace(extension, "")
-                if (extension.lower() == ".txt" and _file_name != "requeriments") or extension.lower() == ".jpeg":
+                if (extension.lower() == ".txt" and _file_name != "requeriments") or extension.lower() == ".png":
                     zip_output.write(archive)
                     remove(archive)
     print(f'[{color_text("green", "+")}] successful compression')
