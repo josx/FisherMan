@@ -224,9 +224,9 @@ def search(brw: Firefox, user: AnyStr):
         great_filter = ""
         if ARGS.work is not None:
             great_filter += filters["Work"][ARGS.work]
-        if ARGS.education is not None:
+        elif ARGS.education is not None:
             great_filter += filters["Education"][ARGS.education]
-        if ARGS.city is not None:
+        elif ARGS.city is not None:
             great_filter += filters["City"][ARGS.city]
         brw.get(f"{manager.get_search_prefix()}{parameter}{suffix + great_filter}")
     else:
