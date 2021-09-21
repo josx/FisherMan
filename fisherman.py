@@ -45,6 +45,8 @@ class Fisher:
         parser.add_argument('--version', action='version', version=f'%(prog)s {__version__}',
                             help='Shows the current version of the program.')
 
+        parser.add_argument("--update", action="store_true", help="Refresh the search filters")
+
         exclusive_group.add_argument('-u', '--username', nargs='+', help='Defines one or more users for the search.')
 
         exclusive_group.add_argument("-i", "--id", nargs="+", help="Set the profile identification number.")
@@ -124,6 +126,22 @@ def update():
                 print(color_text("yellow", "Update Available!"))
     except Exception as error:
         print(color_text('red', f"A problem occured while checking for an update: {error}"))
+
+    try:
+        r2 = requests.get("https://raw.githubusercontent.com/Godofcoffe/FisherMan/main/filters.json")
+        if r2.text != open("filters.json").read():
+            print(color_text("yellow", "New filters have been added, use the --update argument to update."))
+    except:
+        raise Exception
+
+
+def update_filters():
+    r3 = requests.get("https://raw.githubusercontent.com/Godofcoffe/FisherMan/main/filters.json")
+    if r3.status_code == requests.codes.OK:
+        with open("filters.json", "w") as new_filters:
+            new_filters.write(r3.text)
+    else:
+        r3.raise_for_status()
 
 
 def show_filters():
@@ -587,6 +605,9 @@ if __name__ == '__main__':
     manager = Manager()
     ARGS = fs.args
     update()
+    if ARGS.update:
+        update_filters()
+        sys.exit(0)
     if ARGS.filters:
         show_filters()
         sys.exit(0)
