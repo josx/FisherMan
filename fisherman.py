@@ -1,10 +1,10 @@
 #! /usr/bin/env python3
 
-from datetime import datetime
-import sys
 import json
+import sys
 from argparse import ArgumentParser
 from base64 import b64decode
+from datetime import datetime
 from os import walk, remove, getcwd
 from pathlib import Path
 from re import findall
